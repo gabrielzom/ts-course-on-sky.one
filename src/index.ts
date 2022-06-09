@@ -2,13 +2,18 @@ import axios from 'axios';
 
 const baseUrl:string = "https://jsonplaceholder.typicode.com";
 
+interface Report {
+  isValid(): boolean
+}
+
 interface ResponseTodo {
   data: {
     userId: number;
     id: number;
     title: string;
     completed: boolean;
-  };
+  },
+  report: Report
 }
 
 let numberInt: number;
@@ -56,5 +61,74 @@ async function req(): Promise<ResponseTodo> {
   const response = await axios.get(`${baseUrl}/todos/1`) as ResponseTodo;
   return printData(response)
 }
+
+
+class Vehicle {
+
+  private model: string | undefined;
+  public mounter: string;
+
+  constructor(mounter: string) {
+    this.mounter = mounter
+  }
+
+  setModel(model: string): void {
+    this.model = model;
+  }
+
+  public getModel(): string | undefined {
+    return this.model;
+  }
+
+  public getMounter(): string {
+    return this.mounter;
+  }
+
+  public drive(): void {
+    console.log('Rum rum')
+  }
+
+  public hunk(): void {
+    console.log('bee bee')
+  }
+}
+
+class Car extends Vehicle {
+  constructor(mounter: string) {
+    super(mounter)
+  }
+  private lengthInMeters: number | undefined
+  private maxVelocity: number | undefined
+  private timeOfZeroToHundredKm: number | undefined
+
+  public setLengthInMeters(lengthInMeters: number): void {
+   this.lengthInMeters = lengthInMeters;
+  } 
+  
+  public setMaxVelocity(maxVelocity: number): void {
+    this.maxVelocity= maxVelocity
+  }
+
+  public setTimeOfZeroToHundreKm(timeOfZeroToHundredKm: number): void {
+    this.timeOfZeroToHundredKm = timeOfZeroToHundredKm;
+  }
+
+  public getLengthInMeters(): number | undefined {
+    return this.lengthInMeters;
+  }
+
+  public getMaxVelocity(): number | undefined {
+    return this.maxVelocity;
+  }
+
+  public getTimeOfZeroToHundredKm(): number | undefined {
+    return this.timeOfZeroToHundredKm;
+  }
+}
+
+var car = new Car('GM')
+
+console.log(car.setModel('Astra Belga'))
+console.log(car.hunk())
 
 req()
